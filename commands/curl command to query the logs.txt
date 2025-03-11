@@ -1,0 +1,49 @@
+docker run -d --name elasticsearch -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -e "xpack.security.enabled=false"   docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+
+curl -X GET "http://localhost:9200"
+
+docker restart elasticsearch
+
+{
+  "timestamp": "2025-02-19T12:00:00",
+  "log_message": "Error: Connection timeout",
+  "solution": "Increase timeout settings in config.yaml"
+}
+
+
+pip install elasticsearch sentence-transformers
+
+delete log index
+curl.exe -X DELETE "http://localhost:9200/logs_index"
+
+curl.exe -X PUT "http://localhost:9200/logs_index/_mapping" -H "Content-Type: application/json" -d '
+{
+  "dynamic": "strict"
+}'
+
+curl.exe -X GET "http://localhost:9200/logs_index/_mapping?pretty"
+
+curl.exe -X GET "http://localhost:9200/logs_index/_count?pretty"
+
+curl.exe -X GET "http://localhost:9200/logs_index/_search?pretty" -H "Content-Type: application/json" -d '
+{
+  "query": { "match_all": {} },
+  "size": 0
+}'
+
+curl.exe -X GET "http://localhost:9200/logs_index/_search?pretty" -H "Content-Type: application/json" -d "
+{
+  "query": { "match_all": {} },
+  "size": 10
+}"
+
+
+curl.exe -X GET "http://localhost:9200/logs_index/_search?pretty" -H "Content-Type: application/json" -d "{ \"query\": { \"match_all\": {} }, \"size\": 10 }"
+curl.exe -X GET "http://localhost:9200/logs_index/_search?pretty" -H "Content-Type: application/json" -d "{""query"": {""match_all"": {}}, ""size"": 10}"
+
+curl.exe -X GET "http://localhost:9200/logs_index/_search?pretty" -H "Content-Type: application/json" -d '{ "query": { "match_all": {} }, "size": 10 }'
+curl.exe -X GET "http://localhost:9200/logs_index/_search?pretty" -H "Content-Type: application/json" --data-binary "@query.json"
+curl.exe -X GET "http://localhost:9200/logs_index/_search?pretty" -H "Content-Type: application/json" --data-binary "@query.json" -o output.json
+
+
+
